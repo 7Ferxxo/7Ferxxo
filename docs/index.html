@@ -1,0 +1,1789 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="description"
+        content="El rinconcito de 7Ferxxu: colores, ideas sueltas y algún que otro experimento. Desde Panamá, a mi ritmo.">
+    <title>7Ferxxu — Mi rinconcito</title>
+    <meta name="theme-color" content="#080d13">
+    <meta property="og:title" content="7Ferxxu — Mi rinconcito">
+    <meta property="og:description" content="Líneas, colores y cosas que voy haciendo por curiosidad. Desde Panamá, a mi ritmo.">
+    <meta property="og:type" content="website">
+    <style>
+        :root {
+            --bg: #080d13;
+            --panel: rgba(14, 22, 30, 0.9);
+            --border: #283744;
+            --border-hi: #3f586d;
+            --text: #eaf1f5;
+            --muted: #9cb0be;
+            --accent: #a9f577;
+            --secondary: #75d8dc;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            accent-color: var(--accent);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(169, 245, 119, 0.05), transparent 42%),
+                radial-gradient(circle at 85% 85%, rgba(117, 216, 220, 0.05), transparent 45%),
+                var(--bg);
+            overflow-x: hidden;
+        }
+
+        button,
+        select,
+        input {
+            font: inherit;
+        }
+
+        button,
+        a,
+        select,
+        input {
+            touch-action: manipulation;
+        }
+
+        button,
+        select {
+            color: inherit;
+            background: #141f29;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 11px;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+        }
+
+        button {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        button:hover,
+        select:hover {
+            background: #1f2f3d;
+            border-color: var(--border-hi);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        a {
+            color: var(--accent);
+            transition: opacity 0.15s;
+        }
+
+        a:hover {
+            opacity: 0.85;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 28px 32px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: #edf5f7;
+            font-size: 19px;
+            font-weight: 750;
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .status-pill {
+            font-size: 11px;
+            font-weight: 500;
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            color: #b8c9d6;
+            background: rgba(24, 35, 45, 0.75);
+            border: 1px solid var(--border);
+            padding: 3px 9px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-pill::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            font-size: 13px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #b7c5ce;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        main {
+            flex: 1;
+            width: 100%;
+        }
+
+        .intro {
+            max-width: 1280px;
+            margin: 18px auto 20px;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin: 0 0 12px;
+        }
+
+        h1 {
+            font-weight: 580;
+            font-size: clamp(27px, 4vw, 48px);
+            letter-spacing: -1.8px;
+            margin: 0;
+            line-height: 1.06;
+        }
+
+        .intro>p {
+            max-width: 370px;
+            font-size: 14px;
+            line-height: 1.68;
+            color: #b0c0cc;
+            margin: 0;
+        }
+
+        #stage {
+            position: relative;
+            width: min(1280px, calc(100% - 64px));
+            aspect-ratio: 1280 / 440;
+            margin: 0 auto;
+            border: 1px solid #28353f;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #080d13;
+            box-shadow: 0 22px 75px rgba(0, 0, 0, 0.52);
+            transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #stage[data-ratio="wide"] {
+            aspect-ratio: 16 / 9;
+        }
+
+        #stage[data-ratio="vertical"] {
+            aspect-ratio: 9 / 16;
+            width: min(460px, calc(100% - 32px));
+        }
+
+        #stage[data-ratio="square"] {
+            aspect-ratio: 1 / 1;
+            width: min(640px, calc(100% - 32px));
+        }
+
+        #stage[data-ratio="web"] {
+            aspect-ratio: auto;
+            height: 72dvh;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .preset-bar {
+            max-width: 1280px;
+            margin: 14px auto 0;
+            padding: 0 32px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .chip {
+            font-size: 11.5px;
+            padding: 6px 11px;
+            border-radius: 999px;
+            background: #101922;
+            border: 1px solid #253441;
+            color: #b4c4d0;
+        }
+
+        .chip[aria-current="true"] {
+            background: rgba(169, 245, 119, 0.13);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .meta-readout {
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 11px;
+            color: #889eae;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #controls {
+            position: fixed;
+            z-index: 10;
+            right: 24px;
+            bottom: 24px;
+            width: 306px;
+            max-height: calc(100dvh - 48px);
+            overflow-y: auto;
+            background: var(--panel);
+            border: 1px solid #354552;
+            box-shadow: 0 18px 70px rgba(0, 0, 0, 0.65);
+            border-radius: 14px;
+            padding: 16px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            scrollbar-width: thin;
+            scrollbar-color: #354859 transparent;
+        }
+
+        #controls[hidden],
+        #show[hidden] {
+            display: none !important;
+        }
+
+        .panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .panel-head strong {
+            font-size: 13px;
+        }
+
+        #hide {
+            padding: 4px 9px;
+            font-size: 11.5px;
+        }
+
+        .fields {
+            display: grid;
+            gap: 11px;
+            margin-top: 13px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .field {
+            display: grid;
+            gap: 5px;
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #c2cfd8;
+        }
+
+        output {
+            color: var(--accent);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 11px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 1px 0;
+            cursor: pointer;
+        }
+
+        select {
+            width: 100%;
+            font-size: 12px;
+            padding: 6px 8px;
+        }
+
+        .toggles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+            margin-top: 2px;
+        }
+
+        .toggle-btn {
+            font-size: 11px;
+            padding: 6px 8px;
+            border-radius: 7px;
+            background: #111a22;
+            color: #9ab0bf;
+            border: 1px solid #263542;
+        }
+
+        .toggle-btn[aria-pressed="true"] {
+            background: rgba(169, 245, 119, 0.14);
+            color: var(--accent);
+            border-color: rgba(169, 245, 119, 0.45);
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+            margin-top: 14px;
+        }
+
+        .actions button {
+            font-size: 11.5px;
+            padding: 7px 6px;
+        }
+
+        .export-stack {
+            display: grid;
+            gap: 7px;
+            margin-top: 8px;
+        }
+
+        .export-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .export-stack button {
+            font-size: 11.5px;
+            width: 100%;
+        }
+
+        #save {
+            background: rgba(169, 245, 119, 0.12);
+            border-color: rgba(169, 245, 119, 0.4);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        #save:hover {
+            background: rgba(169, 245, 119, 0.22);
+        }
+
+        #loop-rec[data-recording="true"] {
+            background: rgba(255, 92, 92, 0.2);
+            border-color: #ff5c5c;
+            color: #ffb3b3;
+        }
+
+        .hint {
+            font-size: 11px;
+            line-height: 1.55;
+            color: var(--muted);
+            margin: 11px 0 0;
+            padding-top: 9px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        kbd {
+            font: inherit;
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 10px;
+            border: 1px solid #4b5a67;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        #show {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 11;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            width: 100%;
+            max-width: 1280px;
+            margin: 22px auto 48px;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            color: #9fb1bf;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* La página pública muestra solo el perfil; ?editor=1 abre las herramientas. */
+        body:not(.editor) #controls,
+        body:not(.editor) #show,
+        body:not(.editor) .preset-bar {
+            display: none !important;
+        }
+
+        /* Modo de captura limpia para GitHub Actions / README */
+        .capture header,
+        .capture .intro,
+        .capture .preset-bar,
+        .capture footer,
+        .capture #controls,
+        .capture #show {
+            display: none !important;
+        }
+
+        .capture #stage {
+            width: 100vw;
+            height: 100vh;
+            border: 0;
+            border-radius: 0;
+            margin: 0;
+            aspect-ratio: auto;
+            box-shadow: none;
+        }
+
+        @media (max-width: 680px) {
+            header {
+                padding: 20px 20px 10px;
+            }
+
+            .status-pill {
+                display: none;
+            }
+
+            .intro {
+                margin-top: 14px;
+                padding: 0 20px;
+                display: block;
+            }
+
+            .intro>p {
+                margin-top: 12px;
+            }
+
+            #stage {
+                width: calc(100% - 32px);
+                aspect-ratio: 1 / 1;
+            }
+
+            .preset-bar {
+                padding: 0 20px;
+            }
+
+            #controls {
+                right: 12px;
+                bottom: 12px;
+                width: calc(100vw - 24px);
+                max-width: 310px;
+                max-height: 64dvh;
+            }
+
+            footer {
+                padding: 0 20px;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            nav {
+                gap: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="brand" href="https://github.com/7Ferxxo">
+            7Ferxxu<span> :)</span>
+            <small class="status-pill">Panamá · creando</small>
+        </a>
+        <nav aria-label="Enlaces personales">
+            <a href="https://github.com/7Ferxxo">Mis repos ↗</a>
+            <a href="mailto:fernandosoliscx@gmail.com">Correo ↗</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="intro">
+            <div>
+                <p class="eyebrow">Una cosa que hice por curiosidad</p>
+                <h1>¿Y si movemos estas líneas?</h1>
+            </div>
+            <p>Ideas sueltas, un poco de curiosidad y ganas de ver qué sale.</p>
+        </div>
+
+        <div id="stage" data-ratio="banner">
+            <canvas id="art" role="img"
+                aria-label="7Ferxxu. Aprendiendo y haciendo cositas, desde Panamá. Una matriz animada de caracteres verdes."></canvas>
+        </div>
+
+        <div class="preset-bar" aria-label="Estilos rápidos">
+            <div class="presets" id="preset-chips">
+                <button type="button" class="chip" data-preset="classic">✦ Original 7Ferxxu</button>
+                <button type="button" class="chip" data-preset="devnet">⬡ Red Plexus Dev</button>
+                <button type="button" class="chip" data-preset="voronoi">◈ Vitral Voronoi</button>
+                <button type="button" class="chip" data-preset="vangogh">≈ Flujo Impresionista</button>
+                <button type="button" class="chip" data-preset="matrix" aria-current="true">⌘ Matriz ASCII</button>
+                <button type="button" class="chip" data-preset="chaos">∞ Atractor 3D</button>
+            </div>
+            <div class="meta-readout">
+                <span id="fps-label">60 FPS</span>
+                <span>·</span>
+                <span id="phase-label">φ 0.00</span>
+            </div>
+        </div>
+    </main>
+
+    <aside id="controls" aria-label="Controles de la animación">
+        <div class="panel-head">
+            <strong>A ver qué sale…</strong>
+            <button id="hide" aria-label="Ocultar controles">Ocultar · H</button>
+        </div>
+
+        <div class="fields">
+            <div class="field">
+                <label for="style">Geometría / Motor</label>
+                <select id="style">
+                    <option value="orbits">Órbitas + Constelación</option>
+                    <option value="plexus">Grafo Plexus (Dev Network)</option>
+                    <option value="waves">Ondas de Interferencia</option>
+                    <option value="contours">Contornos Topográficos</option>
+                    <option value="flow">Flujo Impresionista</option>
+                    <option value="stained">Vitral Voronoi</option>
+                    <option value="ascii">Matriz ASCII (7Ferxxu)</option>
+                    <option value="attractor">Atractor Toroidal 3D</option>
+                </select>
+            </div>
+
+            <div class="grid-2">
+                <div class="field">
+                    <label for="palette">Paleta</label>
+                    <select id="palette">
+                        <option value="lime">Lima / hielo</option>
+                        <option value="ocean">Océano</option>
+                        <option value="ember">Ámbar</option>
+                        <option value="orchid">Orquídea</option>
+                        <option value="cyber">Cyberpunk</option>
+                        <option value="emerald">Esmeralda</option>
+                        <option value="mono">Monocromo</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="card">Identidad</label>
+                    <select id="card">
+                        <option value="classic">Clásica 7Ferxxu</option>
+                        <option value="hud">Terminal + HUD</option>
+                        <option value="minimal">Firma Mínima</option>
+                        <option value="none">Oculta (Solo Arte)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="speed">Velocidad <output id="speed-value">0.6</output></label>
+                <input id="speed" type="range" min="0" max="2" step="0.1" value="0.6">
+            </div>
+            <div class="field">
+                <label for="zoom">Escala <output id="zoom-value">1.0</output></label>
+                <input id="zoom" type="range" min="0.5" max="1.6" step="0.05" value="1">
+            </div>
+            <div class="field">
+                <label for="noise">Turbulencia <output id="noise-value">0.3</output></label>
+                <input id="noise" type="range" min="0" max="1" step="0.05" value="0.3">
+            </div>
+            <div class="field">
+                <label for="density">Densidad <output id="density-value">28</output></label>
+                <input id="density" type="range" min="12" max="52" step="1" value="28">
+            </div>
+            <div class="field">
+                <label for="stroke">Grosor <output id="stroke-value">1.0</output></label>
+                <input id="stroke" type="range" min="0.5" max="2.5" step="0.1" value="1">
+            </div>
+
+            <div class="field">
+                <label for="ratio">Formato de Lienzo</label>
+                <select id="ratio">
+                    <option value="banner">Banner de perfil (1280×440)</option>
+                    <option value="web">Web / pantalla</option>
+                    <option value="wide">16:9 / horizontal</option>
+                    <option value="vertical">9:16 / vertical (Reels)</option>
+                    <option value="square">1:1 / cuadrado</option>
+                </select>
+            </div>
+
+            <div class="toggles">
+                <button type="button" class="toggle-btn" id="toggle-glow" aria-pressed="true">Brillo aditivo</button>
+                <button type="button" class="toggle-btn" id="toggle-grain" aria-pressed="true">Grano fílmico</button>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="pause" aria-pressed="false">Pausar</button>
+            <button id="random" title="Combinación aleatoria (Tecla R)">Azar · R</button>
+            <button id="reset">Reiniciar</button>
+        </div>
+
+        <div class="export-stack">
+            <div class="export-row">
+                <button id="save">Guardar PNG ↓</button>
+                <button id="loop-rec" data-recording="false">Grabar WebM ●</button>
+            </div>
+            <button id="copy-url">Copiar URL de este preset 🔗</button>
+        </div>
+
+        <p class="hint">
+            <kbd>H</kbd> oculta el panel · <kbd>Espacio</kbd> pausa · <kbd>R</kbd> azar · <kbd>T</kbd> alterna el texto.
+            Haz clic en el lienzo para lanzar ondas.
+        </p>
+    </aside>
+
+    <button id="show" hidden aria-label="Mostrar controles">Controles · H</button>
+
+    <footer>
+        <span>Un poco de curiosidad y un rato libre.</span>
+    </footer>
+
+    <script>
+        (() => {
+            'use strict';
+
+            const TAU = Math.PI * 2;
+            const canvas = document.querySelector('#art');
+            const ctx = canvas.getContext('2d', { alpha: false });
+            const stage = document.querySelector('#stage');
+            const fpsLabel = document.querySelector('#fps-label');
+            const phaseLabel = document.querySelector('#phase-label');
+
+            const query = new URLSearchParams(location.search);
+            const capture = query.has('capture');
+            const editor = query.get('editor') === '1' && !capture;
+            if (capture) document.body.classList.add('capture');
+            if (editor) document.body.classList.add('editor');
+
+            const motion = matchMedia('(prefers-reduced-motion: reduce)');
+            const defaults = { speed: 0.6, zoom: 1.0, noise: 0.4, density: 32, stroke: 1.1 };
+            const styles = ['orbits', 'plexus', 'waves', 'contours', 'flow', 'stained', 'ascii', 'attractor'];
+            const cards = ['classic', 'hud', 'minimal', 'none'];
+            const ratios = ['banner', 'web', 'wide', 'vertical', 'square'];
+            const limits = { speed: [0, 2], zoom: [0.5, 1.6], noise: [0, 1], density: [12, 52], stroke: [0.5, 2.5] };
+            function queryNumber(key, fallback, min, max) {
+                const raw = query.get(key);
+                const value = raw === null || raw.trim() === '' ? NaN : Number(raw);
+                return Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
+            }
+
+            const palettes = {
+                lime: ['#a9f577', '#75d8dc', '#d8ffad', '#080d13'],
+                ocean: ['#80caff', '#62e3c8', '#bae2ff', '#060c14'],
+                ember: ['#ffc780', '#ff927d', '#ffe5bf', '#100908'],
+                orchid: ['#c7a2ff', '#f6a3d0', '#ecd9ff', '#0c0914'],
+                cyber: ['#00f5d4', '#ff2a85', '#ffee55', '#070812'],
+                emerald: ['#52e59b', '#a8f070', '#80ffdb', '#06100c'],
+                mono: ['#e6edf3', '#8b9eb0', '#ffffff', '#090c10']
+            };
+
+            // Allow URL query parameters to pre-configure any render or GitHub capture
+            let style = styles.includes(query.get('style')) ? query.get('style') : 'ascii';
+            let palette = Object.hasOwn(palettes, query.get('palette')) ? query.get('palette') : 'emerald';
+            let cardMode = cards.includes(query.get('card')) ? query.get('card') : 'classic';
+            let seed = Math.trunc(queryNumber('seed', 7702, 0, 4294967295));
+            let showGlow = query.get('glow') !== '0';
+            let showGrain = query.get('grain') !== '0';
+            stage.dataset.ratio = ratios.includes(query.get('ratio')) ? query.get('ratio') : 'banner';
+            document.querySelector('#ratio').value = stage.dataset.ratio;
+
+            const target = Object.fromEntries(Object.entries(defaults).map(([key, value]) =>
+                [key, queryNumber(key, value, ...limits[key])]
+            ));
+            const current = { ...target };
+
+            let time = 0;
+            let last = 0;
+            let paused = motion.matches;
+            let width = 1280;
+            let height = 440;
+            let pointer = { x: 0, y: 0 };
+            let pointerTarget = { x: 0, y: 0 };
+            const ripples = [];
+
+            // Curated presets for 1-click exploration
+            const presets = {
+                classic: { style: 'orbits', palette: 'lime', card: 'classic', speed: 0.6, zoom: 1.0, noise: 0.3, density: 28, stroke: 1.0 },
+                devnet: { style: 'plexus', palette: 'lime', card: 'hud', speed: 0.5, zoom: 1.05, noise: 0.35, density: 32, stroke: 1.0 },
+                voronoi: { style: 'stained', palette: 'ocean', card: 'classic', speed: 0.5, zoom: 1.05, noise: 0.4, density: 26, stroke: 1.1 },
+                vangogh: { style: 'flow', palette: 'ember', card: 'classic', speed: 0.7, zoom: 1.05, noise: 0.55, density: 34, stroke: 1.2 },
+                matrix: { style: 'ascii', palette: 'emerald', card: 'classic', speed: 0.6, zoom: 1.0, noise: 0.4, density: 32, stroke: 1.1 },
+                chaos: { style: 'attractor', palette: 'orchid', card: 'classic', speed: 0.6, zoom: 1.1, noise: 0.45, density: 30, stroke: 1.0 }
+            };
+
+            // Deterministic PRNG (Mulberry32)
+            function mulberry32(a) {
+                return function () {
+                    let t = (a += 0x6d2b79f5);
+                    t = Math.imul(t ^ (t >>> 15), t | 1);
+                    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+                    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+                };
+            }
+
+            // Smooth periodic 2D trigonometric field (seamless over phase = t * TAU)
+            function field2D(x, y, phase, s = 1) {
+                const n1 = Math.sin(x * 1.7 + phase + s) * Math.cos(y * 1.7 - phase + s);
+                const n2 = Math.sin(x * 3.1 - y * 2.4 + phase * 2) * 0.5;
+                const n3 = Math.cos(x * 5.2 + y * 4.6 - phase * 2) * 0.25;
+                return (n1 + n2 + n3) / 1.75;
+            }
+
+            // Pre-rendered procedural grain tile (zero external images)
+            const grainTile = document.createElement('canvas');
+            grainTile.width = 128;
+            grainTile.height = 128;
+            const grainCtx = grainTile.getContext('2d');
+            function updateGrainTile() {
+                const img = grainCtx.createImageData(128, 128);
+                const d = img.data;
+                const rand = mulberry32(seed);
+                for (let i = 0; i < d.length; i += 4) {
+                    const v = (rand() * 255) | 0;
+                    d[i] = v;
+                    d[i + 1] = v;
+                    d[i + 2] = v;
+                    d[i + 3] = 14;
+                }
+                grainCtx.putImageData(img, 0, 0);
+            }
+            updateGrainTile();
+
+            function syncTheme() {
+                const [accent, secondary] = palettes[palette];
+                document.documentElement.style.setProperty('--accent', accent);
+                document.documentElement.style.setProperty('--secondary', secondary);
+            }
+            syncTheme();
+
+            function size() {
+                const r = stage.getBoundingClientRect();
+                width = Math.max(1, r.width);
+                height = Math.max(1, r.height);
+                const dpr = Math.min(devicePixelRatio || 1, 2);
+                canvas.width = Math.round(width * dpr);
+                canvas.height = Math.round(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                draw(time);
+            }
+            const observer = new ResizeObserver(size);
+            observer.observe(stage);
+
+            function circle(x, y, r, color, alpha = 1) {
+                ctx.globalAlpha = alpha;
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, TAU);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+
+            // Sutherland-Hodgman polygon clipper for Voronoi Stained Glass
+            function clipPoly(poly, x0, y0, nx, ny) {
+                const out = [];
+                const len = poly.length;
+                if (!len) return out;
+                for (let i = 0; i < len; i++) {
+                    const a = poly[i];
+                    const b = poly[(i + 1) % len];
+                    const da = (a.x - x0) * nx + (a.y - y0) * ny;
+                    const db = (b.x - x0) * nx + (b.y - y0) * ny;
+                    if (da <= 0) {
+                        out.push(a);
+                        if (db > 0) {
+                            const u = da / (da - db);
+                            out.push({ x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u });
+                        }
+                    } else if (db <= 0) {
+                        const u = da / (da - db);
+                        out.push({ x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u });
+                    }
+                }
+                return out;
+            }
+
+            // ==========================================================
+            // 8 PROCEDURAL ENGINES (Strictly Periodic over t in [0, 1))
+            // ==========================================================
+
+            // 1. Órbitas Armónicas + Constelación
+            function drawOrbits(phase, radius, accent, secondary, tertiary) {
+                const n = Math.round(current.density);
+                ctx.lineWidth = current.stroke;
+
+                for (let i = 0; i < n; i++) {
+                    const k = i / Math.max(n - 1, 1);
+                    const turn = k * Math.PI + Math.sin(phase) * 0.14 + pointer.x * 0.22;
+                    const rx = radius * (0.28 + 0.72 * k);
+                    const ry = radius * (0.92 - 0.25 * k);
+                    ctx.beginPath();
+                    for (let j = 0; j <= 160; j++) {
+                        const a = (j / 160) * TAU;
+                        const ripple =
+                            1 +
+                            current.noise * 0.055 * Math.sin(a * 3 + phase) +
+                            current.noise * 0.025 * Math.cos(a * 6 - phase * 2);
+                        let x = Math.cos(a) * rx * ripple;
+                        let y = Math.sin(a) * ry * ripple;
+                        const xx = x * Math.cos(turn) - y * Math.sin(turn);
+                        y = x * Math.sin(turn) + y * Math.cos(turn);
+                        x = xx;
+                        if (j === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = i % 3 === 0 ? secondary : accent;
+                    ctx.globalAlpha = 0.18 + 0.52 * k;
+                    ctx.stroke();
+                }
+
+                // Orbiting nodes & constellation links
+                const nodes = [];
+                for (let i = 0; i < 6; i++) {
+                    const dir = i % 2 === 0 ? 1 : -1;
+                    const a = phase * dir + (i * TAU) / 6;
+                    const rOrb = radius * (0.52 + 0.13 * i);
+                    const x = Math.cos(a) * rOrb * 1.12;
+                    const y = Math.sin(a) * rOrb * 0.98;
+                    nodes.push({ x, y });
+                    circle(x, y, 3 * current.stroke, i % 2 === 0 ? accent : secondary, 0.95);
+                    circle(x, y, 8.5 * current.stroke, accent, 0.09);
+                }
+
+                ctx.lineWidth = 0.8 * current.stroke;
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+                        if (d < radius * 1.15) {
+                            ctx.globalAlpha = (1 - d / (radius * 1.15)) * 0.32;
+                            ctx.strokeStyle = tertiary;
+                            ctx.beginPath();
+                            ctx.moveTo(nodes[i].x, nodes[i].y);
+                            ctx.lineTo(nodes[j].x, nodes[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // 2. Grafo Plexus / Red Simbólica Dev
+            function drawPlexus(phase, radius, accent, secondary, tertiary) {
+                const count = Math.max(16, Math.round(current.density * 1.25));
+                const rand = mulberry32(seed);
+                const pts = [];
+                const span = radius * 1.28;
+
+                for (let i = 0; i < count; i++) {
+                    const a1 = rand() * TAU;
+                    const a2 = rand() * TAU;
+                    const r1 = (0.25 + 0.85 * Math.sqrt(rand())) * span;
+                    const freqX = (i % 2) + 1;
+                    const freqY = ((i + 1) % 2) + 1;
+                    const wobble = 0.16 + current.noise * 0.25;
+                    const x =
+                        Math.cos(a1 + Math.sin(phase * freqX + a2) * wobble) * r1 * 1.12 +
+                        Math.cos(phase + a1) * radius * 0.14;
+                    const y =
+                        Math.sin(a1 + Math.cos(phase * freqY + a2) * wobble) * r1 * 0.95 +
+                        Math.sin(phase + a2) * radius * 0.14;
+                    pts.push({ x, y });
+                }
+
+                const maxDist = radius * (0.58 + current.noise * 0.2);
+                ctx.lineWidth = current.stroke * 0.9;
+
+                // Connect edges and subtle glass triangles
+                for (let i = 0; i < count; i++) {
+                    const p1 = pts[i];
+                    for (let j = i + 1; j < count; j++) {
+                        const p2 = pts[j];
+                        const d12 = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+                        if (d12 > maxDist) continue;
+
+                        const alpha = (1 - d12 / maxDist) * 0.55;
+                        ctx.strokeStyle = (i + j) % 3 === 0 ? secondary : accent;
+                        ctx.globalAlpha = alpha;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+
+                        // Form subtle triangulated facets
+                        for (let k = j + 1; k < count; k += 2) {
+                            const p3 = pts[k];
+                            const d23 = Math.hypot(p2.x - p3.x, p2.y - p3.y);
+                            const d13 = Math.hypot(p1.x - p3.x, p1.y - p3.y);
+                            if (d23 < maxDist * 0.72 && d13 < maxDist * 0.72) {
+                                ctx.fillStyle = i % 2 === 0 ? accent : secondary;
+                                ctx.globalAlpha = alpha * 0.11;
+                                ctx.beginPath();
+                                ctx.moveTo(p1.x, p1.y);
+                                ctx.lineTo(p2.x, p2.y);
+                                ctx.lineTo(p3.x, p3.y);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        }
+                    }
+                }
+
+                for (let i = 0; i < count; i++) {
+                    const p = pts[i];
+                    circle(p.x, p.y, (i % 4 === 0 ? 3.1 : 2.0) * current.stroke, i % 3 === 0 ? tertiary : accent, 0.9);
+                    if (i % 4 === 0) circle(p.x, p.y, 7.5 * current.stroke, accent, 0.1);
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // 3. Ondas de Interferencia
+            function drawWaves(phase, radius, accent, secondary, tertiary) {
+                const n = Math.round(current.density);
+                ctx.lineWidth = current.stroke;
+                for (let i = 0; i < n; i++) {
+                    const k = i / Math.max(n - 1, 1);
+                    ctx.beginPath();
+                    for (let j = 0; j <= 160; j++) {
+                        const u = j / 160;
+                        const x = (u - 0.5) * radius * 2.55;
+                        const env = Math.sin(u * Math.PI);
+                        const wave =
+                            Math.sin(u * Math.PI * 3 + phase + k * 3) +
+                            Math.cos(u * Math.PI * 6 - phase * 2 + k * 4.5) * current.noise * 0.5;
+                        const y = (k - 0.5) * radius * 1.82 + wave * radius * (0.1 + current.noise * 0.14) * env;
+                        if (j === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = i % 3 === 0 ? secondary : accent;
+                    ctx.globalAlpha = 0.19 + 0.52 * k;
+                    ctx.stroke();
+
+                    if (i % 5 === 0) {
+                        const uDot = ((phase / TAU) + k * 0.65) % 1;
+                        const dx = (uDot - 0.5) * radius * 2.55;
+                        const env = Math.sin(uDot * Math.PI);
+                        const dy =
+                            (k - 0.5) * radius * 1.82 +
+                            Math.sin(uDot * Math.PI * 3 + phase + k * 3) * radius * (0.1 + current.noise * 0.14) * env;
+                        circle(dx, dy, 2.3 * current.stroke, tertiary, 0.78 * env);
+                    }
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // 4. Contornos Topográficos / Isolíneas
+            function drawContours(phase, radius, accent, secondary, tertiary) {
+                const n = Math.round(current.density);
+                ctx.lineWidth = current.stroke;
+                for (let i = 0; i < n; i++) {
+                    const k = i / Math.max(n - 1, 1);
+                    ctx.beginPath();
+                    for (let j = 0; j <= 160; j++) {
+                        const a = (j / 160) * TAU;
+                        const cx = Math.cos(a);
+                        const sy = Math.sin(a);
+                        const f = field2D(cx * (1.1 + k), sy * (1.1 + k), phase, seed * 0.01);
+                        const r =
+                            radius *
+                            (0.24 + 0.78 * k) *
+                            (1 +
+                                (0.09 + current.noise * 0.14) * Math.sin(a * 3 + phase) +
+                                0.04 * Math.cos(a * 5 - phase) +
+                                f * current.noise * 0.22);
+                        const x = cx * r;
+                        const y = sy * r;
+                        if (j === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    if (i % 6 === 0) {
+                        ctx.setLineDash([5, 4]);
+                        ctx.strokeStyle = tertiary;
+                    } else {
+                        ctx.setLineDash([]);
+                        ctx.strokeStyle = i % 3 === 0 ? secondary : accent;
+                    }
+                    ctx.globalAlpha = 0.19 + 0.52 * k;
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+                ctx.globalAlpha = 1;
+            }
+
+            // 5. Flujo Impresionista (Curl Vector Brushstrokes)
+            function drawFlow(phase, radius, accent, secondary, tertiary) {
+                const count = Math.round(current.density * 13);
+                const rand = mulberry32(seed);
+                const span = radius * 1.38;
+                ctx.lineCap = 'round';
+
+                for (let i = 0; i < count; i++) {
+                    const rNorm = Math.sqrt(rand());
+                    const theta = rand() * TAU;
+                    let px = Math.cos(theta) * rNorm * span * 1.25;
+                    let py = Math.sin(theta) * rNorm * span * 1.02;
+
+                    const col = i % 5 === 0 ? tertiary : i % 2 === 0 ? accent : secondary;
+                    const w = (0.75 + rand() * 1.8) * current.stroke;
+                    ctx.lineWidth = w;
+                    ctx.strokeStyle = col;
+                    ctx.globalAlpha = 0.22 + 0.54 * (1 - rNorm * 0.65);
+
+                    ctx.beginPath();
+                    ctx.moveTo(px, py);
+
+                    const stepLen = (5 + current.noise * 10) * (0.7 + rand() * 0.6);
+                    for (let s = 0; s < 6; s++) {
+                        const angle =
+                            field2D(px / (radius * 0.8), py / (radius * 0.8), phase, seed * 0.001) *
+                            Math.PI *
+                            (1.7 + current.noise * 2.2) +
+                            Math.atan2(py - pointer.y * 100, px - pointer.x * 100) * 0.3;
+                        px += Math.cos(angle) * stepLen;
+                        py += Math.sin(angle) * stepLen;
+                        ctx.lineTo(px, py);
+                    }
+                    ctx.stroke();
+
+                    if (i % 7 === 0) circle(px, py, w * 1.1, col, 0.52);
+                }
+                ctx.lineCap = 'butt';
+                ctx.globalAlpha = 1;
+            }
+
+            // 6. Vitral Voronoi (Stained Glass Tessellation)
+            function drawStained(phase, radius, accent, secondary, tertiary) {
+                const cells = Math.max(10, Math.min(42, Math.round(current.density * 0.95)));
+                const rand = mulberry32(seed);
+                const boundR = radius * 1.22;
+
+                const sites = [];
+                for (let i = 0; i < cells; i++) {
+                    const k = i / cells;
+                    const ang = k * TAU + rand() * 0.5;
+                    const dist = Math.sqrt((i + 0.5) / cells) * boundR * 0.92;
+                    const wob = radius * (0.04 + current.noise * 0.13);
+                    const sx = Math.cos(ang + Math.sin(phase + i) * 0.22) * dist + Math.cos(phase + i * 1.7) * wob;
+                    const sy = Math.sin(ang + Math.cos(phase + i) * 0.22) * dist + Math.sin(phase + i * 2.3) * wob;
+                    sites.push({ x: sx, y: sy });
+                }
+
+                const boundary = [];
+                for (let i = 0; i < 20; i++) {
+                    const a = (i / 20) * TAU;
+                    boundary.push({ x: Math.cos(a) * boundR * 1.15, y: Math.sin(a) * boundR * 1.0 });
+                }
+
+                for (let i = 0; i < sites.length; i++) {
+                    const s = sites[i];
+                    let poly = boundary;
+                    for (let j = 0; j < sites.length; j++) {
+                        if (i === j) continue;
+                        const o = sites[j];
+                        const dx = o.x - s.x;
+                        const dy = o.y - s.y;
+                        const gap = 0.955 - current.stroke * 0.01;
+                        poly = clipPoly(poly, s.x + dx * 0.5 * gap, s.y + dy * 0.5 * gap, dx, dy);
+                        if (poly.length < 3) break;
+                    }
+                    if (poly.length < 3) continue;
+
+                    ctx.beginPath();
+                    ctx.moveTo(poly[0].x, poly[0].y);
+                    for (let p = 1; p < poly.length; p++) ctx.lineTo(poly[p].x, poly[p].y);
+                    ctx.closePath();
+
+                    const col = i % 3 === 0 ? accent : i % 3 === 1 ? secondary : tertiary;
+                    ctx.fillStyle = col;
+                    ctx.globalAlpha = 0.11 + 0.2 * (0.5 + 0.5 * Math.sin(phase + i * 0.8));
+                    ctx.fill();
+
+                    ctx.lineWidth = current.stroke * 1.1;
+                    ctx.strokeStyle = col;
+                    ctx.globalAlpha = 0.58;
+                    ctx.stroke();
+                    circle(s.x, s.y, 1.5, col, 0.45);
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // 7. Matriz ASCII en Tiempo Real
+            function drawAscii(phase, radius, accent, secondary, tertiary) {
+                const glyphs = ' .·:-=+*#%@7FERXXU';
+                const cols = Math.max(16, Math.min(44, Math.round(current.density * 0.95)));
+                const rows = Math.round(cols * 0.72);
+                const spanX = radius * 2.45;
+                const spanY = radius * 1.82;
+                const cellH = spanY / rows;
+
+                const fontSize = Math.max(9, Math.min(19, Math.round(cellH * 0.9 * current.stroke * 0.85)));
+                ctx.font = `600 ${fontSize}px ui-monospace, SFMono-Regular, Consolas, monospace`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                for (let r = 0; r < rows; r++) {
+                    const ny = (r / (rows - 1) - 0.5) * 2;
+                    for (let c = 0; c < cols; c++) {
+                        const nx = (c / (cols - 1) - 0.5) * 2;
+                        const dist = Math.hypot(nx - pointer.x * 0.45, ny - pointer.y * 0.45);
+                        if (dist > 1.3) continue;
+
+                        const w =
+                            Math.sin(dist * (5 + current.noise * 5) - phase * 2) * 0.5 +
+                            Math.cos(nx * 4 + phase) * Math.sin(ny * 4 - phase) * 0.5;
+                        const norm = Math.max(0, Math.min(0.999, (w + 1) * 0.5 * (1 - dist * 0.44)));
+                        const idx = Math.floor(norm * glyphs.length);
+                        if (idx <= 0) continue;
+
+                        ctx.fillStyle = idx > 13 ? tertiary : idx > 8 ? accent : secondary;
+                        ctx.globalAlpha = 0.22 + norm * 0.76;
+                        ctx.fillText(glyphs[idx], nx * spanX * 0.5, ny * spanY * 0.5);
+                    }
+                }
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'alphabetic';
+                ctx.globalAlpha = 1;
+            }
+
+            // 8. Atractor Toroidal 3D
+            function drawAttractor(phase, radius, accent, secondary, tertiary) {
+                const strands = Math.max(6, Math.round(current.density * 0.45));
+                const rotY = phase + pointer.x * 0.7;
+                const rotX = Math.sin(phase) * 0.35 + pointer.y * 0.5;
+                const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+                const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+
+                ctx.lineWidth = current.stroke;
+                for (let s = 0; s < strands; s++) {
+                    const k = s / strands;
+                    const offset = k * TAU;
+                    ctx.beginPath();
+                    for (let i = 0; i <= 180; i++) {
+                        const u = (i / 180) * TAU;
+                        const rTube = 0.38 + current.noise * 0.2 * Math.sin(u * 5 + phase);
+                        const R = 1 + rTube * Math.cos(3 * u + offset);
+                        const x3 = R * Math.cos(2 * u + phase);
+                        const y3 = R * Math.sin(2 * u + phase);
+                        const z3 = rTube * Math.sin(3 * u + offset) + Math.cos(u * 2 - phase) * 0.24;
+
+                        const xRot = x3 * cosY - z3 * sinY;
+                        const zRot = x3 * sinY + z3 * cosY;
+                        const yRot = y3 * cosX - zRot * sinX;
+                        const zFinal = y3 * sinX + zRot * cosX;
+
+                        const persp = 2.6 / (2.9 + zFinal * 0.7);
+                        const sx = xRot * radius * 0.78 * persp;
+                        const sy = yRot * radius * 0.78 * persp;
+                        if (i === 0) ctx.moveTo(sx, sy);
+                        else ctx.lineTo(sx, sy);
+                    }
+                    ctx.strokeStyle = s % 3 === 0 ? tertiary : s % 2 === 0 ? accent : secondary;
+                    ctx.globalAlpha = 0.22 + 0.58 * k;
+                    ctx.stroke();
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // ==========================================================
+            // MASTER DRAW FUNCTION
+            // ==========================================================
+            function draw(t) {
+                const portrait = width / height < 1.55;
+                const W = portrait ? 768 : 1280;
+                const H = (height / width) * W;
+                const sx = width / W;
+                const sy = height / H;
+                const phase = t * TAU;
+
+                const [accent, secondary, tertiary, bgTint] = palettes[palette];
+
+                ctx.save();
+                ctx.scale(sx, sy);
+                ctx.fillStyle = bgTint || '#080d13';
+                ctx.fillRect(0, 0, W, H);
+
+                // Fixed dot grid keeps every exported loop grounded
+                for (let x = 32; x < W; x += 32) {
+                    for (let y = 24; y < H; y += 32) {
+                        circle(x, y, 0.72, '#698194', 0.18);
+                    }
+                }
+
+                const centered = cardMode === 'none' || cardMode === 'minimal';
+                const cx = centered ? W * 0.5 : portrait ? W * 0.5 : 972;
+                const cy = centered ? H * 0.5 : portrait ? H * 0.68 : H * 0.5;
+                const baseRadius = centered
+                    ? Math.min(W, H) * 0.33
+                    : portrait
+                        ? Math.min(W * 0.29, H * 0.25)
+                        : 152;
+                const radius = baseRadius * current.zoom;
+
+                // Radial atmospheric glow
+                const glow = ctx.createRadialGradient(cx, cy, 4, cx, cy, 310 * current.zoom);
+                glow.addColorStop(0, accent + '1a');
+                glow.addColorStop(0.55, secondary + '08');
+                glow.addColorStop(1, accent + '00');
+                ctx.fillStyle = glow;
+                ctx.fillRect(0, 0, W, H);
+
+                // Generative Core
+                ctx.save();
+                ctx.translate(cx + pointer.x * 10, cy + pointer.y * 10);
+                if (showGlow) ctx.globalCompositeOperation = 'lighter';
+
+                switch (style) {
+                    case 'orbits': drawOrbits(phase, radius, accent, secondary, tertiary); break;
+                    case 'plexus': drawPlexus(phase, radius, accent, secondary, tertiary); break;
+                    case 'waves': drawWaves(phase, radius, accent, secondary, tertiary); break;
+                    case 'contours': drawContours(phase, radius, accent, secondary, tertiary); break;
+                    case 'flow': drawFlow(phase, radius, accent, secondary, tertiary); break;
+                    case 'stained': drawStained(phase, radius, accent, secondary, tertiary); break;
+                    case 'ascii': drawAscii(phase, radius, accent, secondary, tertiary); break;
+                    case 'attractor': drawAttractor(phase, radius, accent, secondary, tertiary); break;
+                    default: drawOrbits(phase, radius, accent, secondary, tertiary);
+                }
+
+                // Interactive click ripples
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    const rp = ripples[i];
+                    ctx.beginPath();
+                    ctx.arc(rp.x - cx, rp.y - cy, rp.r, 0, TAU);
+                    ctx.strokeStyle = accent;
+                    ctx.lineWidth = 1.4;
+                    ctx.globalAlpha = rp.alpha;
+                    ctx.stroke();
+                }
+                ctx.restore();
+
+                // Identity Layer
+                if (cardMode === 'classic' || cardMode === 'hud') {
+                    const scrim = portrait
+                        ? ctx.createLinearGradient(0, 0, 0, 420)
+                        : ctx.createLinearGradient(0, 0, 785, 0);
+                    const baseBg = bgTint || '#080d13';
+                    scrim.addColorStop(0, baseBg);
+                    scrim.addColorStop(0.68, baseBg + 'f6');
+                    scrim.addColorStop(1, baseBg + '00');
+                    ctx.fillStyle = scrim;
+                    ctx.fillRect(0, 0, W, H);
+
+                    ctx.save();
+                    if (!portrait) ctx.translate(0, (H - 440) / 2);
+
+                    const left = 58;
+                    ctx.fillStyle = accent;
+                    ctx.font = '400 14px Consolas, ui-monospace, monospace';
+                    ctx.fillText('mi rinconcito de internet', left, 65);
+
+                    ctx.fillStyle = '#f0f4f5';
+                    ctx.font = '700 92px "Segoe UI", system-ui, sans-serif';
+                    ctx.fillText('7Ferxxu', left, 196);
+
+                    ctx.fillStyle = accent;
+                    ctx.font = '400 27px Consolas, ui-monospace, monospace';
+                    ctx.fillText(':)', left + 390, 188);
+
+                    // Animated organic underline
+                    ctx.strokeStyle = secondary;
+                    ctx.globalAlpha = 0.72;
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.moveTo(left + 3, 213);
+                    ctx.quadraticCurveTo(left + 160, 226 + Math.sin(phase) * 3.5, left + 350, 212);
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+
+                    ctx.fillStyle = '#bccbd5';
+                    ctx.font = '400 25px "Segoe UI", system-ui, sans-serif';
+                    ctx.fillText('Aprendiendo y haciendo cositas.', left, 264);
+
+                    ctx.fillStyle = '#98acbb';
+                    ctx.font = '400 15px "Segoe UI", system-ui, sans-serif';
+                    ctx.fillText('Ideas sueltas y algún que otro experimento.', left, 298);
+
+                    // Breathing status indicator next to location
+                    circle(left + 5, 358, 3.2, accent, 0.55 + 0.4 * Math.sin(phase));
+                    circle(left + 5, 358, 7.5, accent, 0.14);
+                    ctx.fillStyle = accent;
+                    ctx.font = '400 13px Consolas, ui-monospace, monospace';
+                    ctx.fillText('Panamá · a mi ritmo', left + 16, 363);
+
+                    ctx.fillStyle = '#91a7b7';
+                    ctx.font = '400 11px Consolas, ui-monospace, monospace';
+                    ctx.fillText('github.com/7Ferxxo', left, 402);
+
+                    // Developer HUD extra telemetry when 'hud' card mode is active
+                    if (cardMode === 'hud') {
+                        ctx.fillStyle = secondary;
+                        ctx.globalAlpha = 0.82;
+                        ctx.font = '400 11px Consolas, ui-monospace, monospace';
+                        ctx.fillText(
+                            `[engine: ${style}] · [φ: ${(t * 2).toFixed(2)}π] · [seed: #${seed}]`,
+                            left + 145,
+                            402
+                        );
+                        ctx.globalAlpha = 1;
+                    }
+
+                    ctx.restore();
+                } else if (cardMode === 'minimal') {
+                    ctx.fillStyle = accent;
+                    ctx.globalAlpha = 0.75;
+                    ctx.font = '400 12px Consolas, ui-monospace, monospace';
+                    ctx.fillText('7Ferxxu :) · github.com/7Ferxxo', 32, H - 24);
+                    ctx.globalAlpha = 1;
+                }
+
+                // Periodic Film Grain Overlay (uses sin/cos offset so loop t=0..1 is 100% seamless)
+                if (showGrain) {
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'overlay';
+                    const pat = ctx.createPattern(grainTile, 'repeat');
+                    if (pat) {
+                        ctx.fillStyle = pat;
+                        const gx = Math.round(Math.cos(phase) * 32);
+                        const gy = Math.round(Math.sin(phase) * 32);
+                        ctx.translate(gx, gy);
+                        ctx.fillRect(-64, -64, W + 128, H + 128);
+                    }
+                    ctx.restore();
+                }
+
+                ctx.restore();
+            }
+
+            // ==========================================================
+            // ANIMATION LOOP & UI BINDINGS
+            // ==========================================================
+            let frames = 0;
+            let fpsAccum = 0;
+
+            function syncPause() {
+                const b = document.querySelector('#pause');
+                b.textContent = paused ? 'Reproducir' : 'Pausar';
+                b.setAttribute('aria-pressed', String(paused));
+            }
+
+            function syncControlsFromState() {
+                for (const key in target) {
+                    const el = document.getElementById(key);
+                    if (el) el.value = target[key];
+                    const out = document.getElementById(key + '-value');
+                    if (out) out.value = key === 'density' ? String(target[key]) : Number(target[key]).toFixed(1);
+                }
+                document.querySelector('#style').value = style;
+                document.querySelector('#palette').value = palette;
+                document.querySelector('#card').value = cardMode;
+                document.querySelector('#toggle-glow').setAttribute('aria-pressed', String(showGlow));
+                document.querySelector('#toggle-grain').setAttribute('aria-pressed', String(showGrain));
+                syncTheme();
+            }
+
+            function clearActivePresetChip() {
+                document.querySelectorAll('#preset-chips .chip').forEach((c) => c.setAttribute('aria-current', 'false'));
+            }
+
+            function tick(now) {
+                const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
+                last = now;
+
+                frames++;
+                fpsAccum += dt;
+                if (editor && fpsAccum >= 0.5) {
+                    fpsLabel.textContent = `${Math.min(60, Math.round(frames / fpsAccum))} FPS`;
+                    frames = 0;
+                    fpsAccum = 0;
+                }
+
+                const blend = 1 - Math.exp(-dt * 8);
+                for (const k in current) current[k] += (target[k] - current[k]) * blend;
+                pointer.x += (pointerTarget.x - pointer.x) * blend;
+                pointer.y += (pointerTarget.y - pointer.y) * blend;
+
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    ripples[i].r += dt * 240;
+                    ripples[i].alpha -= dt * 0.85;
+                    if (ripples[i].alpha <= 0) ripples.splice(i, 1);
+                }
+
+                if (!paused && !document.hidden) {
+                    time = (time + (dt * current.speed) / 12) % 1;
+                    if (editor) phaseLabel.textContent = `φ ${(time * 2).toFixed(2)}π`;
+                }
+                if (!document.hidden) draw(time);
+                requestAnimationFrame(tick);
+            }
+
+            for (const key in target) {
+                const input = document.getElementById(key);
+                input.addEventListener('input', () => {
+                    target[key] = Number(input.value);
+                    document.getElementById(key + '-value').value =
+                        key === 'density' ? input.value : Number(input.value).toFixed(1);
+                    clearActivePresetChip();
+                });
+            }
+
+            document.querySelector('#style').addEventListener('change', (e) => {
+                style = e.target.value;
+                clearActivePresetChip();
+                draw(time);
+            });
+            document.querySelector('#palette').addEventListener('change', (e) => {
+                palette = e.target.value;
+                syncTheme();
+                clearActivePresetChip();
+                draw(time);
+            });
+            document.querySelector('#card').addEventListener('change', (e) => {
+                cardMode = e.target.value;
+                draw(time);
+            });
+            document.querySelector('#ratio').addEventListener('change', (e) => {
+                stage.dataset.ratio = e.target.value;
+            });
+
+            // Preset chips
+            document.querySelectorAll('#preset-chips .chip').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const p = presets[btn.dataset.preset];
+                    if (!p) return;
+                    clearActivePresetChip();
+                    btn.setAttribute('aria-current', 'true');
+                    style = p.style;
+                    palette = p.palette;
+                    cardMode = p.card;
+                    target.speed = p.speed;
+                    target.zoom = p.zoom;
+                    target.noise = p.noise;
+                    target.density = p.density;
+                    target.stroke = p.stroke;
+                    syncControlsFromState();
+                    draw(time);
+                });
+            });
+
+            document.querySelector('#toggle-glow').addEventListener('click', (e) => {
+                showGlow = !showGlow;
+                e.currentTarget.setAttribute('aria-pressed', String(showGlow));
+                draw(time);
+            });
+            document.querySelector('#toggle-grain').addEventListener('click', (e) => {
+                showGrain = !showGrain;
+                e.currentTarget.setAttribute('aria-pressed', String(showGrain));
+                draw(time);
+            });
+
+            document.querySelector('#pause').addEventListener('click', () => {
+                paused = !paused;
+                syncPause();
+            });
+
+            function randomize() {
+                clearActivePresetChip();
+                seed = Math.floor(1000 + Math.random() * 9000);
+                updateGrainTile();
+                const styles = ['orbits', 'plexus', 'waves', 'contours', 'flow', 'stained', 'ascii', 'attractor'];
+                const pals = Object.keys(palettes);
+                style = styles[Math.floor(Math.random() * styles.length)];
+                palette = pals[Math.floor(Math.random() * pals.length)];
+                target.speed = Number((0.4 + Math.random() * 1.1).toFixed(1));
+                target.zoom = Number((0.8 + Math.random() * 0.5).toFixed(2));
+                target.noise = Number((0.15 + Math.random() * 0.65).toFixed(2));
+                target.density = Math.floor(18 + Math.random() * 28);
+                target.stroke = Number((0.8 + Math.random() * 1.0).toFixed(1));
+                syncControlsFromState();
+                draw(time);
+            }
+            document.querySelector('#random').addEventListener('click', randomize);
+
+            document.querySelector('#reset').addEventListener('click', () => {
+                Object.assign(target, defaults);
+                Object.assign(current, defaults);
+                time = 0;
+                ripples.length = 0;
+                seed = 7702;
+                updateGrainTile();
+                pointer = pointerTarget = { x: 0, y: 0 };
+                palette = 'emerald';
+                style = 'ascii';
+                cardMode = 'classic';
+                showGlow = true;
+                showGrain = true;
+                paused = motion.matches;
+                stage.dataset.ratio = 'banner';
+                document.querySelector('#ratio').value = 'banner';
+                clearActivePresetChip();
+                document.querySelector('[data-preset="matrix"]').setAttribute('aria-current', 'true');
+                syncControlsFromState();
+                syncPause();
+                draw(time);
+            });
+
+            function toggle(hide) {
+                if (!editor) return;
+                document.querySelector('#controls').hidden = hide;
+                document.querySelector('#show').hidden = !hide;
+                (hide ? document.querySelector('#show') : document.querySelector('#hide')).focus();
+            }
+            document.querySelector('#hide').addEventListener('click', () => toggle(true));
+            document.querySelector('#show').addEventListener('click', () => toggle(false));
+
+            document.addEventListener('keydown', (e) => {
+                if (!editor) return;
+                if (
+                    e.ctrlKey ||
+                    e.metaKey ||
+                    e.altKey ||
+                    /INPUT|SELECT|TEXTAREA/.test(e.target.tagName) ||
+                    e.target.isContentEditable
+                ) {
+                    return;
+                }
+                const k = e.key.toLowerCase();
+                if (k === 'h') {
+                    e.preventDefault();
+                    toggle(!document.querySelector('#controls').hidden);
+                } else if (k === ' ') {
+                    e.preventDefault();
+                    paused = !paused;
+                    syncPause();
+                } else if (k === 'r') {
+                    e.preventDefault();
+                    randomize();
+                } else if (k === 't') {
+                    e.preventDefault();
+                    const order = ['classic', 'hud', 'minimal', 'none'];
+                    cardMode = order[(order.indexOf(cardMode) + 1) % order.length];
+                    document.querySelector('#card').value = cardMode;
+                    draw(time);
+                }
+            });
+
+            // Save PNG
+            document.querySelector('#save').addEventListener('click', () => {
+                canvas.toBlob((blob) => {
+                    if (!blob) return;
+                    const a = document.createElement('a');
+                    const url = URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = `7ferxxu-${style}.png`;
+                    a.click();
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                }, 'image/png');
+            });
+
+            // Manual WebM recording; the deterministic GIF exporter handles full loops.
+            let recorder = null;
+            let chunks = [];
+            const recBtn = document.querySelector('#loop-rec');
+
+            recBtn.addEventListener('click', () => {
+                if (recorder && recorder.state === 'recording') {
+                    recorder.stop();
+                    return;
+                }
+                if (!canvas.captureStream || typeof MediaRecorder === 'undefined') return;
+
+                const stream = canvas.captureStream(60);
+                const mime = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'].find((m) =>
+                    MediaRecorder.isTypeSupported(m)
+                ) || '';
+                chunks = [];
+                recorder = new MediaRecorder(stream, mime ? { mimeType: mime, videoBitsPerSecond: 8000000 } : {});
+                recorder.ondataavailable = (e) => {
+                    if (e.data && e.data.size > 0) chunks.push(e.data);
+                };
+                recorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'video/webm' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `7ferxxu-${style}.webm`;
+                    a.click();
+                    setTimeout(() => URL.revokeObjectURL(url), 1500);
+                    recBtn.dataset.recording = 'false';
+                    recBtn.textContent = 'Grabar WebM ●';
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                paused = false;
+                syncPause();
+                recorder.start();
+                recBtn.dataset.recording = 'true';
+                recBtn.textContent = 'Detener ■';
+            });
+
+            // Copy Shareable / Capture URL with exact parameters
+            const copyBtn = document.querySelector('#copy-url');
+            copyBtn.addEventListener('click', async () => {
+                const params = new URLSearchParams({
+                    style,
+                    palette,
+                    card: cardMode,
+                    speed: target.speed,
+                    zoom: target.zoom,
+                    noise: target.noise,
+                    density: target.density,
+                    stroke: target.stroke,
+                    seed,
+                    glow: showGlow ? 1 : 0,
+                    grain: showGrain ? 1 : 0,
+                    ratio: stage.dataset.ratio
+                });
+                const shareUrl = new URL(location.href);
+                shareUrl.search = params.toString();
+                shareUrl.hash = '';
+                try {
+                    await navigator.clipboard.writeText(shareUrl.href);
+                    const prev = copyBtn.textContent;
+                    copyBtn.textContent = '¡URL copiada al portapapeles! ✓';
+                    setTimeout(() => (copyBtn.textContent = prev), 1800);
+                } catch {
+                    window.prompt('Copia este enlace para guardar tu combinación:', shareUrl.href);
+                }
+            });
+
+            // Pointer & Click Ripples
+            stage.addEventListener('pointermove', (e) => {
+                if (motion.matches || paused) return;
+                const r = stage.getBoundingClientRect();
+                pointerTarget = {
+                    x: (e.clientX - r.left) / r.width - 0.5,
+                    y: (e.clientY - r.top) / r.height - 0.5
+                };
+            });
+            stage.addEventListener('pointerleave', () => {
+                pointerTarget = { x: 0, y: 0 };
+            });
+            stage.addEventListener('pointerdown', (e) => {
+                if (motion.matches || paused) return;
+                const r = stage.getBoundingClientRect();
+                const portrait = width / height < 1.55;
+                const W = portrait ? 768 : 1280;
+                const H = (height / width) * W;
+                ripples.push({
+                    x: ((e.clientX - r.left) / r.width) * W,
+                    y: ((e.clientY - r.top) / r.height) * H,
+                    r: 6,
+                    alpha: 0.72
+                });
+            });
+
+            motion.addEventListener('change', (e) => {
+                paused = e.matches;
+                syncPause();
+                draw(time);
+            });
+            document.addEventListener('visibilitychange', () => {
+                last = 0;
+            });
+
+            // Explicit deterministic hook used to render repository assets
+            window.profileArt = {
+                render(t) {
+                    time = ((t % 1) + 1) % 1;
+                    Object.assign(current, target);
+                    draw(time);
+                },
+                state() {
+                    return {
+                        paused,
+                        time,
+                        palette,
+                        style,
+                        card: cardMode,
+                        glow: showGlow,
+                        grain: showGrain,
+                        ratio: stage.dataset.ratio,
+                        seed,
+                        width,
+                        height,
+                        parameters: { ...target }
+                    };
+                }
+            };
+
+            syncControlsFromState();
+            syncPause();
+            size();
+            if (!capture) requestAnimationFrame(tick);
+        })();
+    </script>
+</body>
+
+</html>
