@@ -46,7 +46,7 @@ node scripts/render-assets.cjs
 python scripts/encode-gif.py
 ```
 
-El render usa 80 fotogramas de 1280 × 440 a 10 FPS. La fase recorre un ciclo matemático completo en ocho segundos; no se repite el último fotograma. La animación del laboratorio es más lenta por defecto y se puede ajustar.
+El render usa 120 fotogramas de 960 × 330 a 20 FPS (50 ms por fotograma). La fase recorre un ciclo matemático completo en seis segundos; no se repite el último fotograma. La animación del laboratorio es más lenta por defecto y se puede ajustar.
 
 Los PNG temporales se guardan en `.preview/frames/`, fuera de Git. Los archivos finales son `assets/profile.gif` y `assets/profile-static.png`. El exportador también genera una vista local del README en `.preview/readme.html`.
 

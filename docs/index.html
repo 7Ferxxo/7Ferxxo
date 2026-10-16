@@ -1180,17 +1180,16 @@
                 ctx.globalAlpha = 1;
             }
 
-            // 7. Matriz ASCII en Tiempo Real
+            // 7. Matriz ASCII en Tiempo Real (suavizada para GIF y 60fps)
             function drawAscii(phase, radius, accent, secondary, tertiary) {
-                const glyphs = ' .·:-=+*#%@7FERXXU';
-                const cols = Math.max(16, Math.min(44, Math.round(current.density * 0.95)));
-                const rows = Math.round(cols * 0.72);
+                const glyphs = ' ·:-=+*#%@7FERXXU';
+                const cols = Math.max(14, Math.min(38, Math.round(current.density * 0.85)));
+                const rows = Math.round(cols * 0.68);
                 const spanX = radius * 2.45;
                 const spanY = radius * 1.82;
                 const cellH = spanY / rows;
+                const baseFont = Math.max(10, Math.min(20, Math.round(cellH * 0.88 * current.stroke)));
 
-                const fontSize = Math.max(9, Math.min(19, Math.round(cellH * 0.9 * current.stroke * 0.85)));
-                ctx.font = `600 ${fontSize}px ui-monospace, SFMono-Regular, Consolas, monospace`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
@@ -1199,17 +1198,27 @@
                     for (let c = 0; c < cols; c++) {
                         const nx = (c / (cols - 1) - 0.5) * 2;
                         const dist = Math.hypot(nx - pointer.x * 0.45, ny - pointer.y * 0.45);
-                        if (dist > 1.3) continue;
+                        if (dist > 1.28) continue;
 
+                        // Fase 1x (sin multiplicar por 2) para evitar saltos bruscos entre frames
                         const w =
-                            Math.sin(dist * (5 + current.noise * 5) - phase * 2) * 0.5 +
-                            Math.cos(nx * 4 + phase) * Math.sin(ny * 4 - phase) * 0.5;
-                        const norm = Math.max(0, Math.min(0.999, (w + 1) * 0.5 * (1 - dist * 0.44)));
-                        const idx = Math.floor(norm * glyphs.length);
+                            Math.sin(dist * (3.8 + current.noise * 3.5) - phase) * 0.55 +
+                            Math.cos(nx * 3.2 + phase) * Math.sin(ny * 3.2 - phase) * 0.45;
+
+                        const falloff = Math.cos(Math.min(1, dist / 1.28) * (Math.PI * 0.5));
+                        const norm = Math.max(0, Math.min(0.999, ((w + 1) * 0.5) * falloff));
+
+                        const exactIdx = norm * (glyphs.length - 1);
+                        const idx = Math.floor(exactIdx);
                         if (idx <= 0) continue;
 
-                        ctx.fillStyle = idx > 13 ? tertiary : idx > 8 ? accent : secondary;
-                        ctx.globalAlpha = 0.22 + norm * 0.76;
+                        // Suavizado entre cambios de glifo para que no titile
+                        const frac = exactIdx - idx;
+                        const smoothBell = 0.88 + 0.12 * Math.sin(frac * Math.PI);
+
+                        ctx.font = `600 ${Math.round(baseFont * smoothBell)}px ui-monospace, SFMono-Regular, Consolas, monospace`;
+                        ctx.fillStyle = idx > 12 ? tertiary : idx > 7 ? accent : secondary;
+                        ctx.globalAlpha = (0.18 + Math.pow(norm, 1.15) * 0.8) * smoothBell;
                         ctx.fillText(glyphs[idx], nx * spanX * 0.5, ny * spanY * 0.5);
                     }
                 }
